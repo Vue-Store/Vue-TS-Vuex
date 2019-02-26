@@ -1,7 +1,20 @@
 <template>
   <div class="index" :style="styleO">
-    <Login class="login" v-show="false"/>
     <div class="logo"></div>
+    <el-button type="primary" class="start" @click="showStart">Start</el-button>
+    <el-dialog
+      title="提示"
+      :visible.sync="showStartModal"
+      width="30%"
+      :before-close="handleClose"
+      :append-to-body="true"
+    >
+      <span>这是一段信息</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="showStartModal = false">取 消</el-button>
+        <el-button type="primary" @click="showStartModal = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -10,18 +23,15 @@ const bg0 = require("@/assets/images/home/0.jpg");
 const bg1 = require("@/assets/images/home/1.jpg");
 const bg2 = require("@/assets/images/home/2.jpg");
 
-import { Login } from "@/components";
-
 const bgArray = [bg0, bg1, bg2];
 
 export default {
-  components: {
-    Login
-  },
+  components: {},
   data() {
     return {
       bgNumber: 0,
-      bgArray
+      bgArray,
+      showStartModal: false
     };
   },
   computed: {
@@ -43,6 +53,13 @@ export default {
     }, 3000);
   },
 
+  methods: {
+    handleClose() {},
+    showStart() {
+      this.showStartModal = true;
+    }
+  },
+
   destroyed() {
     this.timer && clearInterval(this.timer);
   }
@@ -57,10 +74,8 @@ export default {
   background-position: center;
   transform: scaleX(1);
   transition: background-image 0.8s ease-in-out;
-
-.login
-  top: 200px;
-  left: 200px;
+  display: flex;
+  justify-content: space-between;
 
 .logo
   background-image: url('../../assets/icon/icon2.png');
@@ -68,4 +83,8 @@ export default {
   height: 100px;
   background-size: 100% 100%;
   margin: 20px;
+
+.start
+  margin: 30px;
+  height: 40px;
 </style>
