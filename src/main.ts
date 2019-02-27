@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import './plugins/axios'
 import ElementUI from 'element-ui'
 
 import App from './App.vue'
