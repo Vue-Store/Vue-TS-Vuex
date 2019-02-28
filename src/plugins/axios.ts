@@ -1,5 +1,7 @@
-import Vue, { PluginObject } from 'vue';
-import axios from 'axios';
+import Vue, { PluginObject } from 'vue'
+import axios from 'axios'
+
+import { globalConfig } from '@/config'
 
 // Full config:  https://github.com/axios/axios#request-config
 // axios.defaults.baseURL = process.env.baseURL || process.env.apiUrl || '';
@@ -7,53 +9,56 @@ import axios from 'axios';
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 const config = {
-  // baseURL: process.env.baseURL || process.env.apiUrl || ""
-  // timeout: 60 * 1000, // Timeout
-  // withCredentials: true, // Check cross-site Access-Control
-};
+  baseURL: globalConfig.baseUrl,
+  timeout: 60 * 1000, // Timeout
+  withCredentials: true, // Check cross-site Access-Control
+  headers: {
+    'Content-Type': 'application/json'
+  }
+}
 
-const _axios = axios.create(config);
+const _axios = axios.create(config)
 
 _axios.interceptors.request.use(
-  (cfg) => {
+  cfg => {
     // Do something before request is sent
-    return cfg;
+    return cfg
   },
-  (err) => {
+  err => {
     // Do something with request error
-    return Promise.reject(err);
-  },
-);
+    return Promise.reject(err)
+  }
+)
 
 // Add a response interceptor
 _axios.interceptors.response.use(
-  (res) => {
+  res => {
     // Do something with response data
-    return res;
+    return res
   },
-  (err) => {
+  err => {
     // Do something with response error
-    return Promise.reject(err);
-  },
-);
+    return Promise.reject(err)
+  }
+)
 
 const Plugin: PluginObject<any> = {
-  install: (Vue) => {
-    Vue.$axios = _axios;
-  },
-};
-Plugin.install = (Vue) => {
-  Vue.$axios = _axios;
-  window.axios = _axios;
+  install: Vue => {
+    Vue.$axios = _axios
+  }
+}
+Plugin.install = Vue => {
+  Vue.$axios = _axios
+  window.axios = _axios
   Object.defineProperties(Vue.prototype, {
     $axios: {
       get() {
-        return _axios;
-      },
-    },
-  });
-};
+        return _axios
+      }
+    }
+  })
+}
 
-Vue.use(Plugin);
+Vue.use(Plugin)
 
-export default Plugin;
+export default Plugin
