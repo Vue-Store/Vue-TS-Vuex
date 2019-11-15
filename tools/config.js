@@ -42,7 +42,7 @@ module.exports = {
     devtool: 'source-map',
     resolve: {
       alias: alias,
-      extensions: ['.vue', '.js', '.css', 'scss']
+      extensions: ['.vue', '.js', '.css', '.scss', '.styl']
     },
     module: {
       rules: [
@@ -55,7 +55,7 @@ module.exports = {
     plugins: []
   },
   css: {
-    modules: false,
+    requireModuleExtension:false,
     extract: true
   },
   chainWebpack: config => {

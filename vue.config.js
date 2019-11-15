@@ -1,3 +1,3 @@
-const customizeConfig = require('./tools/config')
+const VueConfig = require('./tools/config')
 
-module.exports = customizeConfig
+module.exports = VueConfig
