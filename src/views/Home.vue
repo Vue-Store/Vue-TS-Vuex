@@ -134,14 +134,6 @@ export default class Home extends Vue {
   /* LifeCircle */
   mounted() {
     let bgNumber = this.bgNumber;
-    this.timer = setInterval(() => {
-      if (this.bgNumber === 2) {
-        bgNumber = 0;
-      } else {
-        bgNumber++;
-      }
-      this.bgNumber = bgNumber;
-    }, 3000);
   }
 
   destroyed() {

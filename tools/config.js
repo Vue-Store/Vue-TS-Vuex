@@ -22,20 +22,20 @@ module.exports = {
     optimization: {
       splitChunks: {
         cacheGroups: {
-          theme: {
-            name: 'chunk-theme',
-            test: /[\\/]node_modules\/element-ui[\\/]/,
-            chunks: 'all',
-            priority: 10,
-            reuseExistingChunk: true,
-            enforce: true
-          },
-          libs: {
-            name: 'chunk-libs',
-            test: /[\\/]node_modules[\\/]/,
-            priority: 1,
-            chunks: 'initial' // 只打包初始时依赖的第三方
-          }
+          // theme: {
+          //   name: 'chunk-theme',
+          //   test: /[\\/]node_modules\/element-ui[\\/]/,
+          //   chunks: 'all',
+          //   priority: 10,
+          //   reuseExistingChunk: true,
+          //   enforce: true
+          // },
+          // libs: {
+          //   name: 'chunk-libs',
+          //   test: /[\\/]node_modules[\\/]/,
+          //   priority: 1,
+          //   chunks: 'initial' // 只打包初始时依赖的第三方
+          // }
         }
       }
     },
