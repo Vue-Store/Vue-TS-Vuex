@@ -10,13 +10,15 @@
   },
   "dependencies": {
     "@types/node": "^11.15.2",
+    "@types/nprogress": "^0.2.0",
     "@types/vue": "^2.0.0",
     "@types/vue-router": "^2.0.0",
     "animejs": "^3.0.1",
-    "element-ui": "^2.4.5",
+    "nprogress": "^0.2.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
-    "vue": "^2.5.21",
+    "typescript-eslint-parser": "^22.0.0",
+    "vue": "^2.6.10",
     "vue-class-component": "^6.3.2",
     "vue-material": "^1.0.0-beta-10.2",
     "vue-property-decorator": "^7.3.0",
@@ -37,10 +39,10 @@
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "node-sass": "^4.9.2",
-    "sass-loader": "^7.0.3",
+    "sass-loader": "^8.0.0",
     "typescript": "~3.2.4",
     "vue-cli-plugin-axios-ts": "^1.0.2",
     "vue-cli-plugin-element": "^1.0.1",
-    "vue-template-compiler": "^2.5.21"
+    "vue-template-compiler": "^2.6.10"
   }
 }

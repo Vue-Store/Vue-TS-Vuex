@@ -14,22 +14,24 @@
       class="dialogWrap"
       top="25vh"
       @close="handleClose"
+      :close-on-click-modal="false"
     >
       <div class="body">
         <el-form :model="user" :rules="rules" ref="ruleForm">
-          <el-form-item prop="userName">
-            <el-input placeholder="请输入内容" class="sbottom" v-model="user.userName">
+          <el-form-item prop="phone">
+            <el-input placeholder="请输入内容" class="sbottom" v-model="user.phone">
               <template slot="prepend">
                 <i class="el-icon-edit"></i>
-                <span class="smargin">用户</span>
+                <span class="smargin">电话</span>
               </template>
             </el-input>
           </el-form-item>
-          <el-form-item prop="email">
-            <el-input placeholder="请输入内容" v-model="user.email">
+          <el-form-item prop="name">
+
+            <el-input placeholder="请输入内容" class="sbottom" v-model="user.name">
               <template slot="prepend">
                 <i class="el-icon-edit"></i>
-                <span class="smargin">邮箱</span>
+                <span class="smargin">用户</span>
               </template>
             </el-input>
           </el-form-item>
@@ -38,14 +40,6 @@
               <template slot="prepend">
                 <i class="el-icon-edit"></i>
                 <span class="smargin">密码</span>
-              </template>
-            </el-input>
-          </el-form-item>
-          <el-form-item prop="confirmPassword">
-            <el-input placeholder="请输入内容" v-model="user.confirmPassword" type="password">
-              <template slot="prepend">
-                <i class="el-icon-edit"></i>
-                <span class="smargin">确认</span>
               </template>
             </el-input>
           </el-form-item>
@@ -83,31 +77,21 @@ export default class Home extends Vue {
   bgArray = bgArray;
   showStartModal = false;
   user = {
-    userName: "",
-    email: "",
+    name: "",
     password: "",
-    confirmPassword: ""
+    phone: ""
   };
   loading = false;
   timer: null | number = null;
   isLogin: boolean = true;
 
   rules = {
-    userName: [
+    name: [
       {
         required: true,
         min: 3,
         max: 20,
         message: "请输入正确的用户名!",
-        trigger: "blur"
-      }
-    ],
-    email: [
-      {
-        required: true,
-        min: 3,
-        max: 20,
-        message: "请输入正确邮箱!",
         trigger: "blur"
       }
     ],
@@ -120,15 +104,15 @@ export default class Home extends Vue {
         trigger: "blur"
       }
     ],
-    confirmPassword: [
+    phone: [
       {
         required: true,
         min: 3,
         max: 20,
-        message: "请确认密码!",
+        message: "请输入正确的电话!",
         trigger: "blur"
       }
-    ]
+    ],
   };
 
   /* LifeCircle */
@@ -154,17 +138,20 @@ export default class Home extends Vue {
   /* Methods */
   @Emit()
   handleLogin(name: string) {
+
+    const apiUrl = this.isLogin ? '/api/user/login' : '/api/user/register';
+
     (this.$refs[name] as any).validate((valid: boolean) => {
       if (valid) {
         this.loading = true;
 
         this.$axios
-          .post("http://localhost:3000/api/user/signUp", this.user)
+          .post(apiUrl, this.user)
           .then(res => {
             this.loading = false;
             this.showStartModal = false;
             this.$notify({
-              message: "登录成功!",
+              message: this.isLogin ? "登录成功" : "注册成功!",
               type: "success",
               title: "提示!"
             });
@@ -213,7 +200,7 @@ export default class Home extends Vue {
   justify-content: space-between;
 
   .logo
-    background-image: url('../assets/icon/icon2.png');
+    background-image: url('../../assets/icon/icon2.png');
     width: 100px;
     height: 100px;
     background-size: 100% 100%;

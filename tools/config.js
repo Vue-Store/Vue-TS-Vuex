@@ -22,40 +22,45 @@ module.exports = {
     optimization: {
       splitChunks: {
         cacheGroups: {
-          // theme: {
-          //   name: 'chunk-theme',
-          //   test: /[\\/]node_modules\/element-ui[\\/]/,
-          //   chunks: 'all',
-          //   priority: 10,
-          //   reuseExistingChunk: true,
-          //   enforce: true
-          // },
-          // libs: {
-          //   name: 'chunk-libs',
-          //   test: /[\\/]node_modules[\\/]/,
-          //   priority: 1,
-          //   chunks: 'initial' // 只打包初始时依赖的第三方
-          // }
+          theme: {
+            name: 'chunk-theme',
+            test: /[\\/]node_modules\/element-ui[\\/]/,
+            chunks: 'all',
+            priority: 10,
+            reuseExistingChunk: true,
+            enforce: true
+          },
+          libs: {
+            name: 'chunk-libs',
+            test: /[\\/]node_modules[\\/]/,
+            priority: 1,
+            chunks: 'initial' // 只打包初始时依赖的第三方
+          }
         }
       }
     },
     devtool: 'source-map',
     resolve: {
       alias: alias,
-      extensions: ['.vue', '.js', '.css', '.scss', '.styl']
+      extensions: ['.vue', '.ts', '.js', '.css', '.scss', '.styl', '.scss']
     },
     module: {
       rules: [
         {
           test: /\.styl$/,
-          loaders: ['style', 'css', 'stylus']
+          exclude: /node_modules/,
+          use: ['style', 'css', 'stylus']
         }
       ]
     },
     plugins: []
   },
   css: {
-    requireModuleExtension:false,
+
+    // css 模块
+    requireModuleExtension: true,
+
+    // 提取 css
     extract: true
   },
   chainWebpack: config => {
@@ -70,11 +75,12 @@ module.exports = {
         include: [resolve('src/icons')],
         symbolId: 'icon-[name]'
       })
+
   },
   devServer: {
     proxy: {
-      '^/v2': {
-        target: 'http://10.179.23.105',
+      '^/api': {
+        target: 'http://localhost:8868',
         changeOrigin: true,
         ws: false
       }
