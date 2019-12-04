@@ -10,8 +10,11 @@ declare global {
 declare module 'vue/types/vue' {
   interface Vue {
     $axios: AxiosInstance
+    axios: AxiosInstance
+
   }
   interface VueConstructor {
-    $axios: AxiosInstance
+    $axios: AxiosInstance,
+    axios: AxiosInstance
   }
 }

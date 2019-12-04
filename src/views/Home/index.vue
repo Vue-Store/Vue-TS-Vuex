@@ -1,18 +1,17 @@
 <template>
-  <div class="home" :style="style">
+  <div class="home">
+  这个是首页了
   </div>
 </template>
 
-<script>
-  export default {
-    name: 'Home',
+<script lang="ts">
+import { Component, Vue, Emit } from "vue-property-decorator";
 
-    get style() {
-      return {
-        backgroundImage: `url(${require("@/assets/images/home/0.jpg")})`
-      };
-    }
-  }
+@Component({})
+export default class Home extends Vue {
+
+  name = "Home"
+}
 </script>
 
 <style lang="scss" scoped>

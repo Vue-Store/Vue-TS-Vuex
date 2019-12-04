@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+import Layout from '../views/Layout/Index.vue'
+
 Vue.use(Router)
 
 const routes = [
@@ -11,11 +13,16 @@ const routes = [
     component: () => import('@/views/Login/index.vue')
   },
   {
-    path: '/',
-    name: 'index',
-    hidden: false,
-    component: () => import('@/views/Home/index.vue')
-  }
+    path: '/index',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/',
+        component: () => import('@/views/Home/index.vue')
+      }
+    ]
+  },
 ]
 
 /* Global Route */

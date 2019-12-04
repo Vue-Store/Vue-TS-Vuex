@@ -1,5 +1,5 @@
 <template>
-  <div class="home" :style="style">
+  <div class="login" :style="style">
     <div class="logo"></div>
     <div class="button-wrap">
       <el-button type="primary" class="start" @click="handleToLogin">登录</el-button>
@@ -19,27 +19,26 @@
       <div class="body">
         <el-form :model="user" :rules="rules" ref="ruleForm">
           <el-form-item prop="phone">
-            <el-input placeholder="请输入内容" class="sbottom" v-model="user.phone">
+            <el-input placeholder="请输入内容" class="s-bottom" v-model="user.phone">
               <template slot="prepend">
                 <i class="el-icon-edit"></i>
-                <span class="smargin">电话</span>
+                <span class="s-margin">电话</span>
               </template>
             </el-input>
           </el-form-item>
-          <el-form-item prop="name">
-
-            <el-input placeholder="请输入内容" class="sbottom" v-model="user.name">
+          <el-form-item prop="name" v-if="!isLogin">
+            <el-input placeholder="请输入内容" class="s-bottom" v-model="user.name">
               <template slot="prepend">
                 <i class="el-icon-edit"></i>
-                <span class="smargin">用户</span>
+                <span class="s-margin">用户</span>
               </template>
             </el-input>
           </el-form-item>
           <el-form-item prop="password">
-            <el-input placeholder="请输入内容" class="sbottom" v-model="user.password" type="password">
+            <el-input placeholder="请输入内容" class="s-bottom" v-model="user.password" type="password">
               <template slot="prepend">
                 <i class="el-icon-edit"></i>
-                <span class="smargin">密码</span>
+                <span class="s-margin">密码</span>
               </template>
             </el-input>
           </el-form-item>
@@ -64,12 +63,9 @@ const bg2 = require("@/assets/images/home/2.jpg");
 
 const bgArray = [bg0, bg1, bg2];
 import { Component, Vue, Emit } from "vue-property-decorator";
-import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
 
 @Component({
-  components: {
-    HelloWorld
-  }
+  components: {}
 })
 export default class Home extends Vue {
   /* Data */
@@ -132,7 +128,7 @@ export default class Home extends Vue {
   }
 
   get modalTitle() {
-    return this.isLogin ? "欢迎你! 快来注册吧" : "欢迎你! 快来登录吧";
+    return this.isLogin ? "欢迎你! 快来的登录吧!" : "欢迎你! 快来注册吧!";
   }
 
   /* Methods */
@@ -149,21 +145,24 @@ export default class Home extends Vue {
           .post(apiUrl, this.user)
           .then(res => {
             this.loading = false;
-            this.showStartModal = false;
             this.$notify({
               message: this.isLogin ? "登录成功" : "注册成功!",
               type: "success",
-              title: "提示!"
+              title: "提示!",
+              duration: 2 * 1000
             });
+          })
+          .then(() => {
+             if (this.isLogin) {
+              this.showStartModal = false;
+              this.$router.push({path: '/index'})
+            } else {
+              this.isLogin = true
+            }
           })
           .catch(err => {
             this.loading = false;
-            this.$notify({
-              message: "登录失败!",
-              type: "error",
-              title: "提示!"
-            });
-            console.info("error: ", err);
+            console.warn('Catch New Error:', err)
           });
       }
     });
@@ -189,7 +188,7 @@ export default class Home extends Vue {
 </script>
 
 <style scoped lang="stylus">
-.home
+.login
   flex: 1;
   background-repeat: no-repeat;
   background-size: cover;
@@ -211,7 +210,7 @@ export default class Home extends Vue {
     height: 40px;
 
 .dialogWrap
-  .smargin
+  .s-margin
     margin-left: 10px;
 
 .dialogWrap >>> .el-dialog__header

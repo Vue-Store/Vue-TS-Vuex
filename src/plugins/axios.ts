@@ -1,5 +1,6 @@
 import Vue, { PluginObject } from 'vue'
-import axios from 'axios'
+import { Notification } from 'element-ui';
+import axios, { AxiosAdapter } from 'axios'
 
 import { globalConfig } from '@/config'
 
@@ -29,11 +30,19 @@ _axios.interceptors.request.use(
     return Promise.reject(err)
   }
 )
-
 // Add a response interceptor
 _axios.interceptors.response.use(
-  res => {
-    // Do something with response data
+  (response) => {
+    const res = response.data
+
+    if ((<number>res.code) !== 0) {
+      Notification.error({
+        title: 'Error!',
+        message: <string>res.message,
+        duration: 2 * 1000
+      })
+      return Promise.reject(res)
+    }
     return res
   },
   err => {
